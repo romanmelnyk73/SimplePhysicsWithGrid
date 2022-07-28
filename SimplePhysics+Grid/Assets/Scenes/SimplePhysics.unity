@@ -162,8 +162,8 @@ MonoBehaviour:
   dampingCoefficient: 0.01
   tangentialCoefficient: 0.01
   linearForceScalar: 10
-  particlesCount: 8000
-  particleDiameter: 0.15
+  particlesCount: 15000
+  particleDiameter: 0.1
   boxSize: 2.5
   gridSize: {x: 5, y: 5, z: 5}
   gridPosition: {x: 0, y: -1, z: 0}

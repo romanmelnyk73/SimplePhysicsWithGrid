@@ -66,11 +66,6 @@ float4 limitsXZ;
 //////////////////////
 // Grid Generation //
 /////////////////////
-// Per Grid Cell
-// Use particlePositions
-// to populate the
-// voxelGridBuffer
-// Input
 
 [numthreads(CLEAR_GRID_THREAD_COUNT,1,1)]
 void ClearGrid (uint3 id : SV_DispatchThreadID)
@@ -134,9 +129,6 @@ void PopulateGrid (uint3 id : SV_DispatchThreadID)
 /////////////////////////
 // Collision Detection //
 /////////////////////////
-// Per Particle
-// Use particle positions, grid and velocity to compute Particle force
-// Input
 
 float frictionCoefficient;
 float gravityCoefficient;
@@ -174,17 +166,12 @@ float3 CollisionReaction(int j_id, int i_id)
 	{
 		float3 relativePositionNormalized = relativePosition / relativePositionMagnitude;
 
-		// repulsive force (Equation 10)
+		// repulsive force 
 		float3 repulsiveForce = -springCoefficient * (particleDiameter - relativePositionMagnitude) * relativePositionNormalized;
-		// damping force (Equation 11)
-		// https://www2.msm.ctw.utwente.nl/sluding/PAPERS/luding_alert2008.pdf 
-		// says that the damping force acts along the normal....
-		// not sure whether relativeVelocity is relative to particle i's position or particle i's velocity
-		// using velocity here
-		float3 relativeVelocity = particleJVelocity - particleI.velocity; // not sure if correct
+		float3 relativeVelocity = particleJVelocity - particleI.velocity; 
 		float3 dampingForce = dampingCoefficient * relativeVelocity;
 
-		// tangential force (Equation 12)
+		// tangential force 
 		float3 tangentialVelocity = relativeVelocity - (dot(relativeVelocity, relativePositionNormalized) * relativePositionNormalized);
 		float3 tangentialForce = tangentialCoefficient * tangentialVelocity;
 
@@ -243,7 +230,6 @@ float3 ForceFromGridCell(int i, int x, int y, int z) {
  	Particle particle2 = particlesBuffer[ (uint)j_id ];
 
  	normal = particle1.position - particle2.position;
- 	//normal = particle2.position - particle1.position;
 	
  	const float distance = length(normal);
 
@@ -267,7 +253,6 @@ float3 ForceFromGridCell(int i, int x, int y, int z) {
  	Particle particle2 = particlesBuffer[ (uint)j_id ];
 
  	normal = particle1.position - particle2.position;
- 	//normal = particle2.position - particle1.position;
 	
  	const float distance = length(normal);
 
@@ -278,7 +263,6 @@ float3 ForceFromGridCell(int i, int x, int y, int z) {
  		normal = normalize(normal);
 
  		relativeVelocity = particle1.velocity - particle2.velocity;
- 		//relativeVelocity = particle2.velocity - particle1.velocity;
 
  		normal *= dot( relativeVelocity, normal );
 
@@ -413,8 +397,7 @@ float3 ForceFromGridCell(int i, int x, int y, int z) {
 			particle.velocity = 0;
 		}
 
-		
-		//particle.position += particle.velocity * deltaTime;
+		particle.position += particle.velocity * deltaTime;
 
 		particlesBuffer[id.x] = particle;
  }

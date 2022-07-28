@@ -14,19 +14,17 @@ public class SimplePhysics : MonoBehaviour
 
         public Particle(float posRange, float maxVel)
         {
-            //position.x = Random.value * posRange - posRange/2;
             position.x = Random.value * posRange / 2;
-            position.y = (Random.value - 1.0f) * posRange;
-            //position.z = Random.value * posRange - posRange / 2;
+            position.y = (Random.value - 0.5f) * posRange;
             position.z = Random.value * posRange / 2;
-            //velocity.x = Random.value * maxVel - maxVel/2;
-            //velocity.y = Random.value * maxVel - maxVel/2;
-            //velocity.z = Random.value * maxVel - maxVel/2;
+            velocity.x = Random.value * maxVel - maxVel / 2;
+            velocity.y = Random.value * maxVel - maxVel / 2;
+            velocity.z = Random.value * maxVel - maxVel / 2;
             velocity = Vector3.zero;
-            //// color.r = Random.value;
-            // color.g = Random.value;
-            // color.b = Random.value;
-            // color.a = 1;
+            //color.r = Random.value;
+            //color.g = Random.value;
+            //color.b = Random.value;
+            //color.a = 1;
             //color = new Vector4(0.0f, 0.4f, 0.5f, 1.0f);
             color = Vector4.one;
             force = Vector3.zero;    
